@@ -11,22 +11,38 @@ struct ButtonView: View {
     var backgroundColor: Color
     var foregroundColor: Color
     var borderColor: Color
-    var action: () -> Void
+    var action: (() -> Void)? = nil
+    var destination: AnyView? = nil
     
     var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.system(size: 16, weight: .regular, design: .default))
-                .foregroundColor(foregroundColor)
-                .padding()
-                .frame(maxWidth: 250)
-                .background(backgroundColor)
-                .cornerRadius(50)
-                .shadow(radius: 5)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 50)
-                        .stroke(borderColor, lineWidth: 2))
+        if let destination = destination {
+            NavigationLink(destination: destination) {
+                buttonContent
+            }
+            .buttonStyle(PlainButtonStyle()) 
+        } else {
+            Button(action: {
+                action?()
+            }) {
+                buttonContent
+            }
         }
-        .padding(.horizontal, 10)
+    }
+    
+    private var buttonContent: some View {
+        Text(title)
+            .font(.system(size: 16, weight: .regular, design: .default))
+            .foregroundColor(foregroundColor)
+            .padding()
+            .frame(maxWidth: 250)
+            .background(backgroundColor)
+            .cornerRadius(50)
+            .shadow(radius: 5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 50)
+                    .stroke(borderColor, lineWidth: 2)
+            )
+            .padding(.horizontal, 10)
     }
 }
+

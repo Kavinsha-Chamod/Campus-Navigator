@@ -10,43 +10,86 @@ import SwiftUI
 struct LoginView: View {
     @State private var username: String = ""
     @State private var password: String = ""
-    
+    @State private var isLoggedIn: Bool = false
+    @State private var showError: Bool = false
+
     var body: some View {
-        ZStack{
-            Color(red: 0.792, green: 0.941, blue: 0.973).edgesIgnoringSafeArea(.all)
-            VStack{
+        ZStack {
+            Color(red: 0.792, green: 0.941, blue: 0.973)
+                .edgesIgnoringSafeArea(.all)
+
+            VStack {
                 Image("loginScreen")
                     .resizable()
                     .frame(height: 180)
                     .frame(maxWidth: 250)
-                
-                VStack{
+
+                VStack(alignment: .leading) {
                     Text("Login")
-                        .font(.system(size: 32, weight: .bold, design: .default))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("Login to continue using the app.")
-                        .font(.system(size: 16, weight: .regular, design: .default))
-                        .foregroundColor(.gray)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom)
+                        .font(.system(size: 32, weight: .bold))
                     
-                }.padding(.top, 20)
-                    .padding(.leading, 20)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                VStack{
+                    Text("Login to continue using the app.")
+                        .font(.system(size: 16, weight: .regular))
+                        .foregroundColor(.gray)
+                        .padding(.bottom)
+                }
+                .padding(.top, 20)
+                .padding(.leading, 20)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                VStack {
                     TextInputView(
                         title: "Username",
                         placeholder: "Enter your username",
                         text: $username
                     )
+
                     TextInputView(
                         title: "Password",
                         placeholder: "Enter password",
                         text: $password
+                        
                     )
-                    Text("Forgot Password ?")
-                        .padding(.leading, 180)
+
+                    HStack {
+                        Spacer()
+                        Text("Forgot Password?")
+                            .foregroundColor(.blue)
+                            .font(.system(size: 14))
+                            .padding(.trailing, 20)
+                    }
+
+                    ButtonView(
+                        title: "LOGIN",
+                        backgroundColor: Color(red: 2/255, green: 62/255, blue: 138/255),
+                        foregroundColor: .white,
+                        borderColor: Color(red: 2/255, green: 62/255, blue: 138/255)
+                    ) {
+                        handleLogin()
+                    }
+                    .padding(.top, 30)
+
+                    if showError {
+                        Text("Invalid username or password")
+                            .foregroundColor(.red)
+                            .font(.system(size: 14))
+                            .padding(.top, 10)
+                    }
                 }
+                .padding(.horizontal, 20)
+            }
+        }
+        .fullScreenCover(isPresented: $isLoggedIn) {
+            DashboardView()
+        }
+    }
+
+    private func handleLogin() {
+        AuthManager.shared.login(username: username, password: password) { success in
+            if success {
+                isLoggedIn = true
+            } else {
+                showError = true
             }
         }
     }
