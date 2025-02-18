@@ -2,7 +2,7 @@ import SwiftUI
 
 struct LandingView: View {
     var body: some View {
-        NavigationView { // Ensure NavigationView is wrapping the entire view
+        NavigationView {
             ZStack {
                 Color(red: 0.792, green: 0.941, blue: 0.973)
                     .edgesIgnoringSafeArea(.all)
