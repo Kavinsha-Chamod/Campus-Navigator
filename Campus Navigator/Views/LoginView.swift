@@ -48,7 +48,6 @@ struct LoginView: View {
                         title: "Password",
                         placeholder: "Enter password",
                         text: $password
-                        
                     )
 
                     HStack {
@@ -65,7 +64,7 @@ struct LoginView: View {
                         foregroundColor: .white,
                         borderColor: Color(red: 2/255, green: 62/255, blue: 138/255)
                     ) {
-                        handleLogin()
+                        loginUser()
                     }
                     .padding(.top, 30)
 
@@ -84,8 +83,8 @@ struct LoginView: View {
         }
     }
 
-    private func handleLogin() {
-        AuthManager.shared.login(username: username, password: password) { success in
+    private func loginUser() {
+        Login.handleLogin(username: username, password: password) { success in
             if success {
                 isLoggedIn = true
             } else {
