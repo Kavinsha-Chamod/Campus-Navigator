@@ -93,7 +93,7 @@ struct LoginView: View {
                 }
             }
             .fullScreenCover(isPresented: $isLoggedIn) {
-                DashboardView()
+                OTPVerificationView()
             }
         }
     }
