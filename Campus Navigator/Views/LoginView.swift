@@ -55,7 +55,8 @@ struct LoginView: View {
                         TextInputView(
                             title: "Password",
                             placeholder: "Enter password",
-                            text: $password
+                            text: $password,
+                            isSecure: true
                         )
 
                         HStack {
