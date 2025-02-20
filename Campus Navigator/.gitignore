@@ -1,2 +1,12 @@
-# Ignore Xcode user-specific state files
+# Xcode
+.DS_Store
 *.xcuserstate
+*.xcworkspace
+xcuserdata/
+DerivedData/
+build/
+
+# Swift Package Manager
+.swiftpm/
+Packages/
+
