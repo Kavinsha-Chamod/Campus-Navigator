@@ -15,12 +15,9 @@ struct AvailabilityScreen: View {
             
             VStack(spacing: 20) {
                 Text("Public Places Availability")
-                    .font(.system(size: 14, weight: .regular, design: .default))
+                    .font(.system(size: 14, weight: .bold, design: .default))
                     .foregroundColor(.black)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .cornerRadius(10)
-                    .padding(.top, 20)
+                    .padding(.bottom, 20)
 
                 ButtonTextField(
                     title: "Library Chat",
@@ -53,8 +50,8 @@ struct AvailabilityScreen: View {
                                 .font(.system(size: 16, weight: .bold, design: .default))
                                 .foregroundColor(.white)
                             
-                            Image(systemName: "arrow.right") // Arrow icon
-                                .foregroundColor(.white)
+                            Image(systemName: "paperplane.fill") // Arrow icon
+                                .foregroundColor(.black)
                         }
                         .padding()
                         .background(Color(hex: "48CAE4"))
