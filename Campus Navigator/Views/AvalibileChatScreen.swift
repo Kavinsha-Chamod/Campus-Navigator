@@ -1,0 +1,69 @@
+//
+//  AvalibileChatScreen.swift
+//  Campus Navigator
+//
+//  Created by Gayan Kavinda on 2025-02-20.
+//
+
+import SwiftUI
+
+struct AvalibileChatScreen: View {
+    @State private var message: String = ""
+    
+    var body: some View {
+        ZStack {
+            Color(red: 0.792, green: 0.941, blue: 0.973)
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                
+                Text("Library Chat")
+                    .font(.system(size: 14, weight: .bold, design: .default))
+                    .foregroundColor(.black)
+
+                Spacer()
+                
+                HStack {
+                    Spacer()
+                    Text("Is there any free seat for me?")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(24.5)
+                        .padding(.horizontal)
+                }
+                
+                HStack {
+                    TextField("Enter your message", text: $message)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(24.5)
+                        .overlay(
+                            HStack {
+                                Spacer()
+                                Button(action: sendMessage) {
+                                    Image(systemName: "paperplane.fill")
+                                        .foregroundColor(.black)
+                                        .padding(.trailing, 12)
+                                }
+                            }
+                        )
+                        .padding(.horizontal)
+                }
+                .padding(.bottom)
+            }
+        }
+    }
+    
+    func sendMessage() {
+        print("Message sent: \(message)")
+        message = ""
+    }
+}
+
+struct ChatView_Previews: PreviewProvider {
+    static var previews: some View {
+        AvalibileChatScreen()
+    }
+}
+
