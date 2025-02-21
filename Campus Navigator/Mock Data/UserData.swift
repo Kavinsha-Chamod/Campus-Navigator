@@ -7,17 +7,19 @@
 
 import Foundation
 
-struct User {
+struct User: Equatable {
     let username: String
     let password: String
+    let email: String
+    let name: String
 }
 
 struct UserData {
     static let users: [User] = [
-        User(username: "admin", password: "1234"),
-        User(username: "cohdse222f-038", password: "user123"),
-        User(username: "hdse222f-001", password: "user123")
-    ]
+            User(username: "admin", password: "1234", email: "admin@example.com", name: "Admin User"),
+            User(username: "cohdse222f-038", password: "user123", email: "user038@example.com", name: "User 038"),
+            User(username: "hdse222f-001", password: "user123", email: "user001@example.com", name: "User 001")
+        ]
     
     static func validateUser(username: String, password: String) -> Bool {
         return users.contains { $0.username == username && $0.password == password }

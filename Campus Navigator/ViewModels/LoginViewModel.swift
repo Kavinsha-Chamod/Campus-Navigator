@@ -8,9 +8,12 @@
 import Foundation
 
 class Login {
-    static func handleLogin(username: String, password: String, completion: @escaping (Bool) -> Void) {
-        AuthManager.shared.login(username: username, password: password) { success in
-            completion(success)
+    static func handleLogin(username: String, password: String, completion: @escaping (Bool, User?) -> Void) {
+        // Check if the user exists and the password is correct
+        if let user = UserData.users.first(where: { $0.username == username && $0.password == password }) {
+            completion(true, user)  
+        } else {
+            completion(false, nil)
         }
     }
 }

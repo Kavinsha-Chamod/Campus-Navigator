@@ -5,6 +5,7 @@ struct OTPVerificationView: View {
     @State private var isOTPValid = false
     @FocusState private var focusedField: Int?
     @State private var showError: Bool = false
+    var user: User
     
     var body: some View {
         NavigationStack {
@@ -13,10 +14,15 @@ struct OTPVerificationView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
+                    
                     Text("OTP Verification")
                         .font(.system(size: 32, weight: .bold))
                         .padding(.leading, 20)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                        .onAppear {
+                            print("OTP Verification started for user: \(user)")
+                        }
                     
                     Image("OTPicon")
                         .resizable()
@@ -60,27 +66,29 @@ struct OTPVerificationView: View {
                     }
                     .padding(.top, 10)
                     
-                    NavigationLink(
-                        destination: DashboardView()
-                            .navigationBarBackButtonHidden(true),
-                        isActive: $isOTPValid
+                    ButtonView(
+                        title: "VERIFY",
+                        backgroundColor: Color.clear,
+                        foregroundColor: .black,
+                        borderColor: Color(red: 2/255, green: 62/255, blue: 138/255, opacity: 1)
                     ) {
-                        ButtonView(
-                            title: "VERIFY",
-                            backgroundColor: Color.clear,
-                            foregroundColor: .black,
-                            borderColor: Color(red: 2/255, green: 62/255, blue: 138/255, opacity: 1)
-                        ) {
-                            if otpLogic.verifyOTP() {
-                                isOTPValid = true
-                                showError = false
-                            } else {
-                                showError = true
-                            }
+                        if otpLogic.verifyOTP() {
+                            isOTPValid = true
+                            showError = false
+                            print("OTP is valid. Moving to dashboard.")
+                        } else {
+                            showError = true
+                            print("Invalid OTP.")
                         }
                     }
                     .padding(.top, 30)
-                    .navigationBarBackButtonHidden(true)
+                    
+                    NavigationLink(
+                        destination: DashboardView(user: user)
+                            .navigationBarBackButtonHidden(true),
+                        isActive: $isOTPValid
+                    ) { EmptyView() }
+                        .hidden()
                 }
             }
         }
@@ -92,8 +100,4 @@ struct OTPVerificationView: View {
             set: { newValue in otpLogic.otpCode[index] = newValue }
         )
     }
-}
-
-#Preview {
-    OTPVerificationView()
 }
