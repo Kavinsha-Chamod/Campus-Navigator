@@ -54,7 +54,7 @@ struct AvailabilityScreen: View {
                                 .foregroundColor(.black)
                         }
                         .padding()
-                        .background(Color(hex: "48CAE4"))
+                        .background(Color.blue)
                         .cornerRadius(24.5)
                         
                     }
