@@ -32,7 +32,7 @@ struct NavigationTilesView: View {
                     title: "Academic Help",
                     image: "program",
                     color: (Color(hex: "9900EF")),
-                    destination: AvailabilityScreen()
+                    destination: AvailabilityView()
                 )
                 NavigationTile(
                     title: "Availability",
@@ -48,7 +48,7 @@ struct NavigationTilesView: View {
                     title: "Clubs and Events",
                     image: "meeting",
                     color: (Color(hex: "B76F6F")),
-                    destination: AvailabilityScreen()
+                    destination: AvailabilityView()
                 )
                 NavigationTile(
                     title: "Class Schedule",
@@ -62,7 +62,7 @@ struct NavigationTilesView: View {
                     title: "Lost and Found",
                     image: "lostItems",
                     color: (Color(hex: "FFA126")),
-                    destination: AvailabilityScreen()
+                    destination: AvailabilityView()
                 )
                 NavigationTile(
                     title: "Support Service",

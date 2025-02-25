@@ -22,7 +22,7 @@ struct MainTabView: View {
                 }
                 .tag(0)
             
-            AvailabilityScreen()
+            AvailabilityView()
                 .tabItem {
                     Image(systemName: "calendar")
                         .resizable()
