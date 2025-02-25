@@ -40,7 +40,7 @@ struct MainTabView: View {
                 }
                 .tag(2)
             
-            ChatView()
+            PrivateChatView()
                 .tabItem {
                     Image(systemName: "bubble.left.and.bubble.right.fill")
                         .resizable()
