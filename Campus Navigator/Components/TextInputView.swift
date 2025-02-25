@@ -27,15 +27,15 @@ struct TextInputView: View {
                     SecureField(placeholder, text: $text)
                         .padding(.vertical, 14)
                         .padding(.horizontal, 25)
-                        .background(Color.white)
-                        .cornerRadius(50)
+                        .background(Color(hex:"#F2F2F7"))
+                        .cornerRadius(10)
                         .font(.system(size: 16))
                 } else {
                     TextField(placeholder, text: $text)
                         .padding(.vertical, 14)
                         .padding(.horizontal, 25)
-                        .background(Color.white)
-                        .cornerRadius(50)
+                        .background(Color(hex:"#F2F2F7"))
+                        .cornerRadius(10)
                         .font(.system(size: 16))
                 }
 

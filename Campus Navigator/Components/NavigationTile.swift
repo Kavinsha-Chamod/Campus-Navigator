@@ -10,31 +10,29 @@ struct NavigationTile<Destination: View>: View {
     let title: String
     let image: String
     let color: Color
-    let isBigTile: Bool
     let destination: Destination
     
     var body: some View {
         NavigationLink(destination: destination) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(color.opacity(0.2))
-                    .shadow(radius: 3)
+                    .fill(color.opacity(1))
                 
                 VStack {
                     Image(image)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: isBigTile ? 100 : 60, height: isBigTile ? 100 : 30)
-                    
+                        .frame(width: 80, height: 80)
+
                     Text(title)
-                        .font(.system(size: isBigTile ? 20 : 16, weight: .bold))
-                        .foregroundColor(.black)
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .padding(.top, 5)
                 }
                 .padding()
             }
-            .frame(width: UIScreen.main.bounds.width * 0.45, height: isBigTile ? 200 : 95)
+            .frame(width: UIScreen.main.bounds.width * 0.45, height: 185)
         }
     }
 }

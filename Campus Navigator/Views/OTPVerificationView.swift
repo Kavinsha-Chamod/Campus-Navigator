@@ -10,7 +10,7 @@ struct OTPVerificationView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 0.792, green: 0.941, blue: 0.973)
+                Color(red: 255, green: 255, blue: 255)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 20) {
@@ -70,7 +70,7 @@ struct OTPVerificationView: View {
                         title: "VERIFY",
                         backgroundColor: Color.clear,
                         foregroundColor: .black,
-                        borderColor: Color(red: 2/255, green: 62/255, blue: 138/255, opacity: 1)
+                        borderColor: Color(hex:"007AFF")
                     ) {
                         if otpLogic.verifyOTP() {
                             isOTPValid = true
@@ -84,7 +84,8 @@ struct OTPVerificationView: View {
                     .padding(.top, 30)
                     
                     NavigationLink(
-                        destination: DashboardView(user: user)
+//                        destination: DashboardView(user: user)
+                        destination: MainTabView()
                             .navigationBarBackButtonHidden(true),
                         isActive: $isOTPValid
                     ) { EmptyView() }
@@ -101,3 +102,4 @@ struct OTPVerificationView: View {
         )
     }
 }
+

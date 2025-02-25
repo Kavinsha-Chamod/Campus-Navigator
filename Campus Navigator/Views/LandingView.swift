@@ -4,13 +4,13 @@ struct LandingView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color(red: 0.792, green: 0.941, blue: 0.973)
+                Color(red: 255, green: 255, blue: 255)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    Image("splashScreen")
+                    Image("splashIcon")
                         .resizable()
-                        .frame(height: 250)
+                        .frame(height: 300)
                     
                     HStack {
                         Text("Campus ")
@@ -28,7 +28,7 @@ struct LandingView: View {
                             .font(.system(size: 20, weight: .medium, design: .default))
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        Text("Campus Navigator is your ultimate guide to university life! Easily find lecture halls, stay updated on campus events, and more—all in one convenient app.")
+                        Text("Campus Navigator is your ultimate guide to university life! Easily find lecture halls, stay updated on campus events, and more all in one convenient app.")
                             .font(.system(size: 16, weight: .regular, design: .default))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.top, 5)
@@ -36,23 +36,21 @@ struct LandingView: View {
                     }
                     .padding(.leading, 20)
                     
-                    // LOGIN BUTTON
                     ButtonView(
                         title: "LOGIN",
-                        backgroundColor: Color(red: 2/255, green: 62/255, blue: 138/255, opacity: 1),
+                        backgroundColor: Color(hex:"007AFF"),
                         foregroundColor: .white,
-                        borderColor: Color(red: 2/255, green: 62/255, blue: 138/255, opacity: 1),
-                        destination: AnyView(LoginView()) // Now handles navigation properly
+                        borderColor: Color(hex:"007AFF"),
+                        destination: AnyView(LoginView()) 
                     )
                     .padding(.top, 30)
                     
-                    // REGISTER BUTTON
                     ButtonView(
                         title: "REGISTER",
                         backgroundColor: Color.clear,
                         foregroundColor: .black,
-                        borderColor: Color(red: 2/255, green: 62/255, blue: 138/255, opacity: 1),
-                        destination: AnyView(RegisterView()) // Now handles navigation properly
+                        borderColor: Color(hex:"007AFF"),
+                        destination: AnyView(RegisterView())
                     )
                     .padding(.top, 10)
                 }

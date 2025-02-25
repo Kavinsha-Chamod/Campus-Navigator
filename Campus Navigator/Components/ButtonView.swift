@@ -36,10 +36,10 @@ struct ButtonView: View {
             .padding()
             .frame(maxWidth: 250)
             .background(backgroundColor)
-            .cornerRadius(50)
+            .cornerRadius(10)
             .shadow(radius: 5)
             .overlay(
-                RoundedRectangle(cornerRadius: 50)
+                RoundedRectangle(cornerRadius: 10)
                     .stroke(borderColor, lineWidth: 2)
             )
             .padding(.horizontal, 10)

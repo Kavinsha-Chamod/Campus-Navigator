@@ -7,61 +7,22 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct NavigationTilesView: View {
     var body: some View {
         VStack(spacing: 15) {
             HStack(spacing: 10) {
                 NavigationTile(
                     title: "Campus Map",
-                    image: "CampusMapIcon",
-                    color: Color(red: 72/255, green: 202/255, blue: 228/255,
-                                 opacity: 0.5),
-                    isBigTile: true,
+                    image: "traveling",
+                    color: (Color(hex: "4FAF5A")),
                     destination: CampusMapView()
                 )
-                
-                VStack(spacing: 10) {
-                    NavigationTile(
-                        title: "Availability",
-                        image: "AvailabilityIcon",
-                        color: Color(red: 72/255, green: 202/255, blue: 228/255, opacity: 1),
-                        isBigTile: false,
-                        destination: HomeView()
-                    )
-                    
-                    NavigationTile(
-                        title: "Clubs or Events",
-                        image: "directoryIcon",
-                        color: Color(red: 52/255, green: 153/255, blue: 173/255, opacity: 1),
-                        isBigTile: false,
-                        destination: AvailabilityScreen()
-                    )
-                }
-            }
-            
-            HStack(spacing: 10) {
-                VStack(spacing: 10) {
-                    NavigationTile(
-                        title: "Class Schedule",
-                        image: "libraryIcon",
-                        color: Color(red: 62/255, green: 173/255, blue: 195/255, opacity: 1),
-                        isBigTile: false,
-                        destination: HomeView()
-                    )
-                    NavigationTile(
-                        title: "Support Services",
-                        image: "settingsIcon",
-                        color: Color.red,
-                        isBigTile: false,
-                        destination: HomeView()
-                    )
-                }
-                
                 NavigationTile(
                     title: "Mark Attendance",
-                    image: "transportIcon",
-                    color: Color(red: 62/255, green: 173/255, blue: 195/255, opacity: 1),
-                    isBigTile: true,
+                    image: "markattendance",
+                    color: (Color(hex: "001AFF")),
                     destination: HomeView()
                 )
             }
@@ -69,22 +30,51 @@ struct NavigationTilesView: View {
             HStack(spacing: 10) {
                 NavigationTile(
                     title: "Academic Help",
-                    image: "transportIcon",
-                    color: Color(red: 72/255, green: 202/255, blue: 228/255, opacity: 1),
-                    isBigTile: true,
+                    image: "program",
+                    color: (Color(hex: "9900EF")),
+                    destination: AvailabilityScreen()
+                )
+                NavigationTile(
+                    title: "Availability",
+                    image: "availability",
+                    color: (Color(hex: "FF00AE")),
                     destination: HomeView()
                 )
-                VStack(spacing: 10) {
-                    NavigationTile(
-                        title: "Lost and Found",
-                        image: "libraryIcon",
-                        color: Color.green,
-                        isBigTile: false,
-                        destination: HomeView()
-                    )
-                }
+                
             }
+            
+            HStack(spacing: 10) {
+                NavigationTile(
+                    title: "Clubs and Events",
+                    image: "meeting",
+                    color: (Color(hex: "B76F6F")),
+                    destination: AvailabilityScreen()
+                )
+                NavigationTile(
+                    title: "Class Schedule",
+                    image: "calendar",
+                    color: (Color(hex: "374151")),
+                    destination: HomeView()
+                )
+            }
+            HStack(spacing: 10) {
+                NavigationTile(
+                    title: "Lost and Found",
+                    image: "lostItems",
+                    color: (Color(hex: "FFA126")),
+                    destination: AvailabilityScreen()
+                )
+                NavigationTile(
+                    title: "Support Service",
+                    image: "services",
+                    color: (Color(hex: "FF0004")),
+                    destination: HomeView()
+                )
+            }
+            
         }
         .padding(.horizontal, 20)
+        .padding(.vertical, 20)
     }
 }
+

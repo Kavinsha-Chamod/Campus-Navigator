@@ -19,7 +19,7 @@ struct RegisterView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 0.792, green: 0.941, blue: 0.973)
+                Color(red: 255, green: 255, blue: 255)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
@@ -71,9 +71,9 @@ struct RegisterView: View {
                             // REGISTER BUTTON
                             ButtonView(
                                 title: "REGISTER",
-                                backgroundColor: Color(red: 2/255, green: 62/255, blue: 138/255),
+                                backgroundColor: Color(hex:"007AFF"),
                                 foregroundColor: .white,
-                                borderColor: Color(red: 2/255, green: 62/255, blue: 138/255),
+                                borderColor: Color(hex:"007AFF"),
                                 action: {
                                     
                                 }

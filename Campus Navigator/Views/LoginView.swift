@@ -10,13 +10,13 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 0.792, green: 0.941, blue: 0.973)
+                Color(red: 255, green: 255, blue: 255)
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    Image("loginScreen")
+                    Image("loginIcon")
                         .resizable()
-                        .frame(height: 180)
+                        .frame(height: 200)
                         .frame(maxWidth: 250)
                     
                     VStack(alignment: .leading) {
@@ -56,16 +56,16 @@ struct LoginView: View {
                         HStack {
                             Spacer()
                             Text("Forgot Password?")
-                                .foregroundColor(.blue)
+                                .foregroundColor(Color(hex:"007AFF"))
                                 .font(.system(size: 14))
                                 .padding(.trailing, 20)
                         }
                         
                         ButtonView(
                             title: "LOGIN",
-                            backgroundColor: Color(red: 2/255, green: 62/255, blue: 138/255),
+                            backgroundColor: Color(hex:"007AFF"),
                             foregroundColor: .white,
-                            borderColor: Color(red: 2/255, green: 62/255, blue: 138/255)
+                            borderColor: Color(hex:"007AFF")
                         ) {
                             loginUser()
                         }
@@ -77,7 +77,7 @@ struct LoginView: View {
                             
                             NavigationLink(destination: RegisterView()) {
                                 Text("Register")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(Color(hex:"007AFF"))
                                     .fontWeight(.bold)
                             }
                         }
