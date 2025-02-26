@@ -61,9 +61,7 @@ struct AvalibileChatView: View {
     }
 }
 
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        AvalibileChatView()
-    }
+#Preview {
+    AvalibileChatView()
 }
 

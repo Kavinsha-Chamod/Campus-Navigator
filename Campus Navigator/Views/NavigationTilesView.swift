@@ -20,41 +20,24 @@ struct NavigationTilesView: View {
                     destination: CampusMapView()
                 )
                 NavigationTile(
-                    title: "Mark Attendance",
-                    image: "markattendance",
-                    color: (Color(hex: "001AFF")),
-                    destination: HomeView()
-                )
-            }
-            
-            HStack(spacing: 10) {
-                NavigationTile(
                     title: "Academic Help",
                     image: "program",
                     color: (Color(hex: "9900EF")),
-                    destination: AvailabilityView()
+                    destination: AcademicHelpView()
                 )
-                NavigationTile(
-                    title: "Availability",
-                    image: "availability",
-                    color: (Color(hex: "FF00AE")),
-                    destination: HomeView()
-                )
-                
             }
-            
             HStack(spacing: 10) {
                 NavigationTile(
                     title: "Clubs and Events",
                     image: "meeting",
                     color: (Color(hex: "B76F6F")),
-                    destination: AvailabilityView()
+                    destination: ClubsEnrollView()
                 )
                 NavigationTile(
                     title: "Class Schedule",
                     image: "calendar",
                     color: (Color(hex: "374151")),
-                    destination: HomeView()
+                    destination: ClassScheduleView()
                 )
             }
             HStack(spacing: 10) {
@@ -62,13 +45,13 @@ struct NavigationTilesView: View {
                     title: "Lost and Found",
                     image: "lostItems",
                     color: (Color(hex: "FFA126")),
-                    destination: AvailabilityView()
+                    destination: LostAndFoundView()
                 )
                 NavigationTile(
                     title: "Support Service",
                     image: "services",
                     color: (Color(hex: "FF0004")),
-                    destination: HomeView()
+                    destination: SupportServicesView()
                 )
             }
             

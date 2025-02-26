@@ -20,5 +20,5 @@ struct ChatView: View {
 }
 
 #Preview {
-    HomeView()
+    ChatView()
 }

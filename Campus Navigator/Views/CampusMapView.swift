@@ -177,8 +177,6 @@ struct CampusMapView: View {
                     attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
                 )
             }
-
-            .navigationTitle("Campus Map")
         }
     }
 }

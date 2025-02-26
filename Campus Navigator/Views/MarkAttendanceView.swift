@@ -20,5 +20,5 @@ struct MarkAttendanceView: View {
 }
 
 #Preview {
-    HomeView()
+    MarkAttendanceView()
 }

@@ -20,5 +20,5 @@ struct AccountView: View {
 }
 
 #Preview {
-    HomeView()
+    AccountView()
 }
