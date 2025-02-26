@@ -85,7 +85,7 @@ struct OTPVerificationView: View {
                     
                     NavigationLink(
 //                        destination: DashboardView(user: user)
-                        destination: MainTabView()
+                        destination: MainTabView(user: user)
                             .navigationBarBackButtonHidden(true),
                         isActive: $isOTPValid
                     ) { EmptyView() }

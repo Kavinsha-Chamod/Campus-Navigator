@@ -9,11 +9,12 @@ import SwiftUI
 
 struct MainTabView: View {
     @State private var selectedTab = 0
+    var user: User  // Accepting user data from the parent view
     
     var body: some View {
         TabView(selection: $selectedTab) {
             
-            DashboardView(user: User(username: "admin", password: "1234", email: "admin@example.com", name: "Admin User"))
+            DashboardView(user: user)  // Passing the user data to DashboardView dynamically
                 .tabItem {
                     Image(systemName: "house.fill")
                         .resizable()
@@ -65,5 +66,5 @@ struct MainTabView: View {
 }
 
 #Preview {
-    MainTabView()
+    MainTabView(user: User(username: "admin", password: "1234", email: "admin@example.com", name: "Admin User"))
 }
