@@ -6,62 +6,70 @@
 //
 
 import SwiftUI
+import UIKit
+
+struct BlurView: UIViewRepresentable {
+    var style: UIBlurEffect.Style
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        let blurEffect = UIBlurEffect(style: style)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        return blurView
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
+}
 
 struct MainTabView: View {
     @State private var selectedTab = 0
-    var user: User  // Accepting user data from the parent view
-    
+    var user: User
+
     var body: some View {
-        TabView(selection: $selectedTab) {
-            
-            DashboardView(user: user)  // Passing the user data to DashboardView dynamically
-                .tabItem {
-                    Image(systemName: "house.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                    Text("Home")
+        NavigationStack {
+            ZStack {
+                // Add a blur effect to mimic polished UI
+                BlurView(style: .systemUltraThinMaterial)
+                    .ignoresSafeArea()
+
+                TabView(selection: $selectedTab) {
+                    DashboardView(user: user)
+                        .tabItem {
+                            Image(systemName: "house.fill")
+                            Text("Home")
+                        }
+                        .tag(0)
+
+                    AvailabilityView()
+                        .tabItem {
+                            Image(systemName: "calendar")
+                            Text("Availability")
+                        }
+                        .tag(1)
+
+                    MarkAttendanceView()
+                        .tabItem {
+                            Image(systemName: "qrcode.viewfinder")
+                            Text("Mark Attendance")
+                        }
+                        .tag(2)
+
+                    PrivateChatView()
+                        .tabItem {
+                            Image(systemName: "bubble.left.and.bubble.right.fill")
+                            Text("Chat")
+                        }
+                        .tag(3)
+
+                    AccountView()
+                        .tabItem {
+                            Image(systemName: "person.crop.circle.fill")
+                            Text("Account")
+                        }
+                        .tag(4)
                 }
-                .tag(0)
-            
-            AvailabilityView()
-                .tabItem {
-                    Image(systemName: "calendar")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                    Text("Availability")
-                }
-                .tag(1)
-            
-            MarkAttendanceView()
-                .tabItem {
-                    Image(systemName: "qrcode.viewfinder")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                    Text("Mark Attendance")
-                }
-                .tag(2)
-            
-            PrivateChatView()
-                .tabItem {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                    Text("Chat")
-                }
-                .tag(3)
-            
-            AccountView()
-                .tabItem {
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                    Text("Account")
-                }
-                .tag(4)
+                .accentColor(.blue)
+            }
         }
-        .accentColor(.blue)
-        .background(Color.white)
-        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
