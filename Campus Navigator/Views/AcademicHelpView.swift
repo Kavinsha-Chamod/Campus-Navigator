@@ -22,31 +22,13 @@ struct AcademicHelpView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 10) {
-                HStack {
+                HStack { 
                     Spacer()
-                    
-                    Text("Academic Help")
-                        .font(.system(size: 20, weight: .bold))
-                    
-                    Spacer()
+            
                 }
                 .padding(.horizontal)
                 
-                TextField("Search", text: $searchText)
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                    .overlay(
-                        HStack {
-                            Spacer()
-                            Image(systemName: "mic.fill")
-                                .foregroundColor(.gray)
-                                .padding(.trailing, 10)
-                        }
-                    )
-                    .padding(.horizontal)
-                
-                HStack(spacing: 0) {
+                HStack {
                     Button(action: { selectedTab = "Lecturers" }) {
                         Text("Available Lecturers")
                             .frame(maxWidth: .infinity, minHeight: 45)
@@ -55,7 +37,7 @@ struct AcademicHelpView: View {
                             .cornerRadius(8)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(selectedTab == "Lecturers" ? Color.white : Color.clear, lineWidth: 1) // Reduced border width
+                                    .stroke(selectedTab == "Lecturers" ? Color.white : Color.clear, lineWidth: 1)
                             )
                     }
                     
@@ -64,16 +46,18 @@ struct AcademicHelpView: View {
                             .frame(maxWidth: .infinity, minHeight: 45)
                             .foregroundColor(.black)
                             .background(selectedTab == "Instructors" ? Color.white : Color(.systemGray5))
-                            .cornerRadius(8)
+                            .cornerRadius(10)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .stroke(selectedTab == "Instructors" ? Color.white : Color.clear, lineWidth: 1) // Reduced border width
+                                    .stroke(selectedTab == "Instructors" ? Color.white : Color.clear, lineWidth: 1)
                             )
                     }
                 }
-                .padding(.horizontal)
+                .padding(5)
+                .frame(maxWidth: .infinity, minHeight: 45)
                 .background(Color(.systemGray5))
-                .cornerRadius(8)
+                .cornerRadius(10)
+                .padding(.horizontal, 15)
                 
                 Text("List of \(selectedTab)")
                     .font(.system(size: 18, weight: .semibold))
@@ -82,7 +66,7 @@ struct AcademicHelpView: View {
                 
                 VStack(spacing: 10) {
                     ForEach(filteredList, id: \.self) { name in
-                        NavigationLink(destination: AccountView()) {
+                        NavigationLink(destination: AcademicHelpProfile()) {
                             HStack {
                                 Text(name)
                                     .font(.system(size: 17, weight: .medium))
@@ -101,8 +85,22 @@ struct AcademicHelpView: View {
                 
                 Spacer()
             }
-            .navigationBarHidden(true)
-        }
+        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+            .onAppear {
+                UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
+                UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(
+                    string: "Search...",
+                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+                )
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Academic Help")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.black)
+                }
+            }
     }
 }
 
