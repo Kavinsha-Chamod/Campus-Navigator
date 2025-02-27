@@ -9,14 +9,8 @@ struct LostAndFoundView: View {
             VStack {
                 HStack {
                     Spacer()
-                    Text("Lost and Found")
-                        .font(.title2)
-                        .fontWeight(.bold)
-                    Spacer()
                 }
                 .padding(.top)
-
-                SearchBar(text: $searchText, onSearchChange: performSearch)
 
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
@@ -28,25 +22,33 @@ struct LostAndFoundView: View {
                                 locationLost: "Near the Campus Library Entrance",
                                 description: "Apple iPhone 16 Pro\nColor Space Black\nTransparent case with a small sticker of a blue star\nSlight scratch near the camera module"
                             )) {
-                                AsyncImage(url: URL(string: result)) { phase in
-                                    switch phase {
-                                    case .empty:
-                                        ProgressView()
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
-                                            .cornerRadius(8)
-                                    case .failure:
-                                        Image(systemName: "photo")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
-                                            .cornerRadius(8)
-                                    @unknown default:
-                                        EmptyView()
+                                if result.contains("http") {
+                                    AsyncImage(url: URL(string: result)) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
+                                                .cornerRadius(8)
+                                        case .failure:
+                                            Image(systemName: "photo")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
+                                                .cornerRadius(8)
+                                        @unknown default:
+                                            EmptyView()
+                                        }
                                     }
+                                } else {
+                                    Image(result) // Load local assets
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
+                                        .cornerRadius(8)
                                 }
                             }
                         }
@@ -58,7 +60,7 @@ struct LostAndFoundView: View {
 
                 HStack {
                     Spacer()
-                    NavigationLink(destination: ReportItemLostView()) { // NavigationLink here
+                    NavigationLink(destination: ReportItemLostView()) {
                         HStack {
                             Text("Report Item Lost")
                             Image(systemName: "paperplane.fill")
@@ -72,47 +74,43 @@ struct LostAndFoundView: View {
                     .padding(.bottom)
                 }
             }
-            .navigationBarHidden(true)
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        .onChange(of: searchText, perform: { _ in
+            performSearch()
+        })
+        .onAppear {
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(
+                string: "Search...",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+            )
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Lost and Found")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.black)
+            }
         }
     }
 
     func performSearch() {
         if searchText.lowercased().contains("iphone 16") {
             searchResults = [
-                "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-                "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
-                "https://i.dummyjson.com/data/products/3/thumbnail.jpg"
+                "iphone1",
+                "iphone2",
+                "iphone3"
             ]
         } else if searchText.lowercased().contains("laptop") {
             searchResults = [
-                "https://i.dummyjson.com/data/products/8/thumbnail.jpg",
-                "https://i.dummyjson.com/data/products/9/thumbnail.jpg"
+                "laptop1",
+                "laptop2"
             ]
         } else {
             searchResults = []
         }
-    }
-}
-
-struct SearchBar: View {
-    @Binding var text: String
-    var onSearchChange: () -> Void
-
-    var body: some View {
-        HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.gray)
-
-            TextField("Search", text: $text)
-                .textFieldStyle(PlainTextFieldStyle())
-                .onChange(of: text) { _ in
-                    onSearchChange()
-                }
-        }
-        .padding(8)
-        .background(Color(.systemGray6))
-        .cornerRadius(8)
-        .padding(.horizontal)
     }
 }
 

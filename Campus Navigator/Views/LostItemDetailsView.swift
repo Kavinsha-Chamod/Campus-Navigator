@@ -6,50 +6,74 @@
 //
 import SwiftUI
 
-import SwiftUI
-
 struct LostItemDetailView: View {
     let imageName: String
     let itemName: String
     let reportedBy: String
     let locationLost: String
     let description: String
-
+    
     var body: some View {
         NavigationView {
-            VStack {
-                Image(imageName) // Or use AsyncImage if it's a URL
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding()
-                    .frame(maxWidth: .infinity) // Ensure image takes full width
-
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(itemName)
-                        .font(.title2)
-                        .fontWeight(.bold)
-
-                    Text("Reported by: \(reportedBy)")
-                        .font(.headline)
-
-                    Text("Location Lost: \(locationLost)")
-                        .font(.headline)
-
-                    Text("Description")
-                        .font(.headline)
-                        .padding(.top, 5)
-
-                    Text(description)
-                        .font(.body)
+            VStack(spacing: 0) {
+                
+                
+                AsyncImage(url: URL(string: imageName)) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(8)
+                    case .failure:
+                        Image("iphone1")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: .infinity)
+                            .cornerRadius(8)
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
-                .padding(.horizontal)
-
-                Spacer()
-
+                .padding(.horizontal, 30)
+                .padding(.top, 40)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(itemName)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.leading, 10)
+                        
+                        Text("Reported by: \(reportedBy)")
+                            .font(.headline)
+                            .padding(.leading, 10)
+                        
+                        Text("Location Lost: \(locationLost)")
+                            .font(.headline)
+                            .padding(.leading, 10)
+                        
+                        Text("Description")
+                            .font(.headline)
+                            .padding(.top, 5)
+                            .padding(.leading, 10)
+                        
+                        Text(description)
+                            .font(.body)
+                            .padding(.leading, 10)
+                            .padding(.bottom, 20)
+                    }
+                    .padding(.top, 40)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 15)
+                    
+                }
+                
                 HStack {
                     Spacer()
                     Button(action: {
-                        // Action for chatting with the reporter
                     }) {
                         HStack {
                             Text("Chat with Reporter")
@@ -58,23 +82,28 @@ struct LostItemDetailView: View {
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)
-                        .cornerRadius(25) // Make it fully rounded
+                        .cornerRadius(25)
                     }
-                    .padding(.horizontal)
-                    .padding(.bottom)
+                    .padding(.horizontal, 15)
+                    .padding(.bottom, 10)
                 }
             }
-            .navigationTitle("Lost and Found")
-            .navigationBarTitleDisplayMode(.inline)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Lost Item Details")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.black)
+            }
         }
     }
 }
 
-// Example usage and preview
 struct LostItemDetailView_Previews: PreviewProvider {
     static var previews: some View {
         LostItemDetailView(
-            imageName: "https://i.dummyjson.com/data/products/3/thumbnail.jpg", 
+            imageName: "iphone1",
             itemName: "iPhone 16pro",
             reportedBy: "Amal Perera",
             locationLost: "Near the Campus Library Entrance",
