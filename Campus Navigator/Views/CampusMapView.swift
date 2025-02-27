@@ -7,6 +7,20 @@
 
 import SwiftUI
 
+struct VisualEffectBlur: UIViewRepresentable {
+    var style: UIBlurEffect.Style
+
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: style))
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        return blurView
+    }
+
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = UIBlurEffect(style: style)
+    }
+}
+
 struct CampusMapView: View {
     @State private var searchText: String = ""
     @State private var selectedPlace: String? = nil
@@ -67,43 +81,52 @@ struct CampusMapView: View {
                 MapView()
                 
                 VStack {
-                    Spacer()
-                    
                     VStack {
-                        Text("Frequently Searched Items")
+                        Text("Frequently Searched Places")
                             .font(.system(size: 16, weight: .medium))
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.top, 15)
+                            
                             .padding(.leading, 20)
+                            .padding(.top, 10)
                         
-                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 15) {
-                            ForEach(filteredPlaces, id: \.self) { place in
-                                Button(action: {
-                                    selectedPlace = place
-                                    withAnimation(.spring()) {
-                                        showPopup = true
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 15) {
+                                ForEach(filteredPlaces, id: \.self) { place in
+                                    Button(action: {
+                                        selectedPlace = place
+                                        withAnimation(.spring()) {
+                                            showPopup = true
+                                        }
+                                    }) {
+                                        HStack {
+                                            Image(systemName: "location.circle.fill")
+                                                .foregroundColor(.blue)
+                                                .frame(width: 25, height: 25)
+                                            Text(place)
+                                                .font(.system(size: 14))
+                                                .foregroundColor(.black)
+                                        }
+                                        .padding(8)
+                                        .padding(.horizontal, 10)
+                                        .background(Color.gray.opacity(0.5))
+                                        .cornerRadius(10)
                                     }
-                                }) {
-                                    Text(place)
-                                        .frame(width: 150, height: 50)
-                                        .background(Color.gray.opacity(0.2))
-                                        .foregroundColor(.black)
-                                        .cornerRadius(8)
                                 }
                             }
+                            .padding(.horizontal, 20)
                         }
-                        .padding(.top, 10)
-                        .padding(.horizontal, 30)
                         .padding(.bottom, 20)
                     }
                     .frame(maxWidth: .infinity)
-                    .background(Color.white)
+                    .background(VisualEffectBlur(style: .systemMaterialLight))
                 }
-                .edgesIgnoringSafeArea(.bottom)
+                .frame(maxHeight: .infinity, alignment: .top)
                 
+                
+                // Popup for selected place
                 if showPopup, let selectedPlace = selectedPlace {
                     ZStack {
-                        Color.black.opacity(0)
+                        Color.black.opacity(0.6)
                             .edgesIgnoringSafeArea(.all)
                             .onTapGesture {
                                 withAnimation(.spring()) {
@@ -169,7 +192,7 @@ struct CampusMapView: View {
                     .edgesIgnoringSafeArea(.bottom)
                 }
             }
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        }.searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .onAppear {
                 UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
                 UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(
@@ -177,7 +200,14 @@ struct CampusMapView: View {
                     attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
                 )
             }
-        }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Campus Map")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.black)
+                }
+            }
     }
 }
 

@@ -39,33 +39,26 @@ struct MainTabView: View {
                         }
                         .tag(0)
 
-                    AvailabilityView()
-                        .tabItem {
-                            Image(systemName: "calendar")
-                            Text("Availability")
-                        }
-                        .tag(1)
-
                     MarkAttendanceView()
                         .tabItem {
                             Image(systemName: "qrcode.viewfinder")
                             Text("Mark Attendance")
                         }
-                        .tag(2)
+                        .tag(1)
 
                     PrivateChatView()
                         .tabItem {
                             Image(systemName: "bubble.left.and.bubble.right.fill")
                             Text("Chat")
                         }
-                        .tag(3)
+                        .tag(2)
 
                     AccountView()
                         .tabItem {
                             Image(systemName: "person.crop.circle.fill")
                             Text("Account")
                         }
-                        .tag(4)
+                        .tag(3)
                 }
                 .accentColor(.blue)
             }
