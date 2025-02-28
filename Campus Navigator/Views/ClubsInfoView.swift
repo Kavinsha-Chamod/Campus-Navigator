@@ -1,12 +1,14 @@
-//  AccountView.swift
+//
+//  ClubsInfoView.swift
 //  Campus Navigator
 //
-//  Created by Tharusha Rajapaksha on 2025-02-27.
+//  Created by Gayan Kavinda on 2025-02-28.
 //
+
 
 import SwiftUI
 
-struct AccountView: View {
+struct ClubsInfoView: View {
     var body: some View {
         NavigationView {
             List {
@@ -45,25 +47,9 @@ struct AccountView: View {
     }
 }
 
-struct ProfileRow: View {
-    var label: String
-    var value: String
-    
-    var body: some View {
-        HStack {
-            Text(label)
-                .font(.headline)
-            Spacer()
-            Text(value)
-                .font(.subheadline)
-                .foregroundColor(.gray)
-        }
-        .padding(.vertical, 8)
-    }
-}
 
-struct MyAccountView_Previews: PreviewProvider {
+struct ClubsInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView()
+        ClubsInfoView()
     }
 }
