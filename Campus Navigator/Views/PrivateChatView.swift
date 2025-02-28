@@ -1,5 +1,4 @@
-//
-//  PrivateChatScreen.swift
+//  PrivateChatView.swift
 //  Campus Navigator
 //
 //  Created by Gayan Kavinda on 2025-02-20.
@@ -9,25 +8,90 @@ import SwiftUI
 
 struct PrivateChatView: View {
     @State private var searchText: String = ""
-
+    @State private var selectedTab: String = "Friends"
+    
+    let friends = ["Janith Perera", "Rayan Fernando", "Rowen De Silva"]
+    let groupChats = ["Batch 23.2F Computing", "Project Team Alpha"]
+    let chatTimes = ["10:45 AM", "Yesterday", "2 days ago", "3 days ago"]
+    
+    var filteredList: [String] {
+        return selectedTab == "Friends" ? friends : groupChats
+    }
+    
     var body: some View {
         NavigationView {
-            VStack {
-                // Search bar
-                List {
-                    Section(header: Text("Friend List").font(.headline)) {
-                        Text("Janith Perera")
-                        Text("Rayan Fernando")
-                        Text("Rowen De Silva")
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Spacer()
+                }
+                .padding(.horizontal)
+                
+                HStack {
+                    Button(action: { selectedTab = "Friends" }) {
+                        Text("Friends List")
+                            .frame(maxWidth: .infinity, minHeight: 45)
+                            .foregroundColor(.black)
+                            .background(selectedTab == "Friends" ? Color.white : Color(.systemGray5))
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(selectedTab == "Friends" ? Color.white : Color.clear, lineWidth: 1)
+                            )
                     }
-
-                    Section(header: Text("Group Chats").font(.headline)) {
-                        Text("Batch 23.2F Computing")
+                    
+                    Button(action: { selectedTab = "Groups" }) {
+                        Text("Group Chats")
+                            .frame(maxWidth: .infinity, minHeight: 45)
+                            .foregroundColor(.black)
+                            .background(selectedTab == "Groups" ? Color.white : Color(.systemGray5))
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(selectedTab == "Groups" ? Color.white : Color.clear, lineWidth: 1)
+                            )
                     }
                 }
-                .listStyle(InsetGroupedListStyle())
+                .padding(5)
+                .frame(maxWidth: .infinity, minHeight: 45)
+                .background(Color(.systemGray5))
+                .cornerRadius(10)
+                .padding(.horizontal, 15)
+                
+                
+                VStack(spacing: 10) {
+                    ForEach(filteredList.indices, id: \ .self) { index in
+                        NavigationLink(destination: AvalibileChatView()) {
+                            HStack {
+                                Image(systemName: selectedTab == "Friends" ? "person.circle.fill" : "person.3.fill")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundColor(selectedTab == "Friends" ? .blue : .blue)
+                                    .padding(.horizontal, 5)
+                                
+                                Text(filteredList[index])
+                                    .font(.system(size: 17, weight: .medium))
+                                    .foregroundColor(.black)
+                                    .padding(.trailing, 10)
+                                
+                                Spacer()
+                                
+                                Text(chatTimes[index % chatTimes.count])
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.gray)
+                                    .padding(.horizontal, 5)
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 50)
+                            .background(Color.purple.opacity(0.1))
+                            .cornerRadius(8)
+                            .padding(.horizontal)
+                        }
+                    }
+                }
+                
+                Spacer()
             }
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .onAppear {
                 UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
                 UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(
@@ -38,24 +102,17 @@ struct PrivateChatView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("My Chat")
+                    Text("Academic Help")
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.black)
                 }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: FriendRequestView()) {
-                        Image(systemName: "person.badge.plus")
-                            .resizable()
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(.black)
-                    }
-                }
             }
-        }
     }
-}
+    }
 
-#Preview {
-    PrivateChatView()
+
+struct PrivateChatView_Previews: PreviewProvider {
+    static var previews: some View {
+        PrivateChatView()
+    }
 }

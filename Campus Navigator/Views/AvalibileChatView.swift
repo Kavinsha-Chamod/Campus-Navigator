@@ -16,10 +16,6 @@ struct AvalibileChatView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
-                
-                Text("Library Chat")
-                    .font(.system(size: 14, weight: .bold, design: .default))
-                    .foregroundColor(.black)
 
                 Spacer()
                 
@@ -52,7 +48,14 @@ struct AvalibileChatView: View {
                 }
                 .padding(.bottom)
             }
-        }
+        }.navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Chat")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.black)
+                }
+            }
     }
     
     func sendMessage() {
