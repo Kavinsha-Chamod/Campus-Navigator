@@ -1,62 +1,109 @@
-//  LecturesScheduleView.swift
-//  Campus Navigator
-//
-//  Created by Gayan Kavinda on 2025-02-28.
-//
-
 import SwiftUI
 
 struct LectureScheduleView: View {
     @State private var selectedDate: Int? = nil
-    
+    @State private var currentMonth: Int = 3
+    @State private var currentYear: Int = 2025
+
     let dummyLectures: [Int: (String, String, String)] = [
-        5: ("Math", "[Dr. Smith]", "10:00 - 12:00"),
-        12: ("Physics", "[Prof. Johnson]", "13:00 - 15:00"),
-        20: ("IOS", "[Mr. Fuzii]", "09:30 - 15:30"),
-        25: ("AI", "[Dr. Lee]", "08:30 - 10:30")
+        5: ("ML", "[Dr. Thisara]", "10:00 - 12:00"),
+        12: ("Agile", "[Prof. John]", "13:00 - 15:00"),
+        20: ("iOS", "[Mr. Fuzii]", "09:30 - 15:30"),
+        25: ("AI", "[Dr. Samith]", "08:30 - 10:30")
     ]
+    
+    let monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ]
+    
+    var daysInMonth: Int {
+        let calendar = Calendar.current
+        let dateComponents = DateComponents(year: currentYear, month: currentMonth)
+        let date = calendar.date(from: dateComponents)!
+        return calendar.range(of: .day, in: .month, for: date)!.count
+    }
+    
+    var firstWeekday: Int {
+        let calendar = Calendar.current
+        let dateComponents = DateComponents(year: currentYear, month: currentMonth, day: 1)
+        let date = calendar.date(from: dateComponents)!
+        let weekday = calendar.component(.weekday, from: date) - 1
+        return weekday
+    }
+    
+    func previousMonth() {
+        if currentMonth == 1 {
+            currentMonth = 12
+            currentYear -= 1
+        } else {
+            currentMonth -= 1
+        }
+    }
+    
+    func nextMonth() {
+        if currentMonth == 12 {
+            currentMonth = 1
+            currentYear += 1
+        } else {
+            currentMonth += 1
+        }
+    }
     
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
-                // Back Button
+                
+                // Month & Year Selector
                 HStack {
-                    Button(action: {
-                        print("Back button tapped")
-                    }) {
+                    Button(action: previousMonth) {
                         Image(systemName: "chevron.left")
-                            .font(.title)
                             .foregroundColor(.blue)
                     }
+                    
                     Spacer()
-                }
-                .padding(.horizontal, 16)
-                
-                // Calendar Grid with Background Color
-                VStack(spacing: 10) {
-                    Text("Mar 2025")
+                    
+                    Text("\(monthNames[currentMonth - 1]) \(currentYear)")
                         .font(.headline)
                     
-                    // Days of the Week
+                    Spacer()
+                    
+                    Button(action: nextMonth) {
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding(.horizontal, 16)
+
+                VStack(spacing: 10) {
+
                     HStack {
                         ForEach(["M", "T", "W", "T", "F", "S", "S"], id: \.self) { day in
                             Text(day)
                                 .frame(width: 40, height: 40)
                                 .font(.subheadline)
+                                .foregroundColor(.black)
+                                .multilineTextAlignment(.center)
                         }
                     }
                     
                     // Calendar Dates
                     VStack(spacing: 10) {
-                        ForEach(0..<5) { week in
+                        let totalCells = ((daysInMonth + firstWeekday) / 7 + 1) * 7
+                        
+                        ForEach(0..<totalCells / 7, id: \.self) { week in
                             HStack {
-                                ForEach(0..<7) { day in
-                                    let date = week * 7 + day + 1
-                                    if date <= 31 {
+                                ForEach(0..<7, id: \.self) { day in
+                                    let date = week * 7 + day - firstWeekday + 1
+                                    
+                                    if date > 0 && date <= daysInMonth {
                                         Text("\(date)")
                                             .frame(width: 40, height: 40)
                                             .font(.subheadline)
-                                            .background(selectedDate == date ? Color.blue : Color.clear)
+                                            .background(
+                                                selectedDate == date ? Color.blue :
+                                                (dummyLectures.keys.contains(date) ? Color.blue.opacity(0.3) : Color.clear)
+                                            )
                                             .cornerRadius(20)
                                             .foregroundColor(selectedDate == date ? .white : .primary)
                                             .onTapGesture {
@@ -71,7 +118,7 @@ struct LectureScheduleView: View {
                     }
                 }
                 .padding()
-                .background(Color(hex: "F6F6F6")) // Background color added
+                .background(Color(hex: "F6F6F6"))
                 .cornerRadius(10)
                 .padding(.horizontal, 16)
                 
