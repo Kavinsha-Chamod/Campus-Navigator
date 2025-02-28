@@ -37,7 +37,7 @@ struct NavigationTilesView: View {
                     title: "Class Schedule",
                     image: "calendar",
                     color: (Color(hex: "374151")),
-                    destination: ClassScheduleView()
+                    destination: LectureScheduleView()
                 )
             }
             HStack(spacing: 10) {

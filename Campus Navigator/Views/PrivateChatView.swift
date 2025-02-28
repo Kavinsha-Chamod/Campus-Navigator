@@ -21,11 +21,8 @@ struct PrivateChatView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Spacer()
-                }
-                .padding(.horizontal)
                 
+                // Tab Switcher
                 HStack {
                     Button(action: { selectedTab = "Friends" }) {
                         Text("Friends List")
@@ -57,15 +54,15 @@ struct PrivateChatView: View {
                 .cornerRadius(10)
                 .padding(.horizontal, 15)
                 
-                
+                // Chat List
                 VStack(spacing: 10) {
-                    ForEach(filteredList.indices, id: \ .self) { index in
+                    ForEach(filteredList.indices, id: \.self) { index in
                         NavigationLink(destination: AvalibileChatView()) {
                             HStack {
                                 Image(systemName: selectedTab == "Friends" ? "person.circle.fill" : "person.3.fill")
                                     .resizable()
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(selectedTab == "Friends" ? .blue : .blue)
+                                    .foregroundColor(.blue)
                                     .padding(.horizontal, 5)
                                 
                                 Text(filteredList[index])
@@ -90,26 +87,27 @@ struct PrivateChatView: View {
                 
                 Spacer()
             }
+            .navigationTitle(selectedTab)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing:
+                NavigationLink(destination: FriendRequestView()) {
+                    Image(systemName: "person.badge.plus")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.blue)
+                }
+            )
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-            .onAppear {
-                UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
-                UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(
-                    string: "Search...",
-                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
-                )
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("Academic Help")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.black)
-                }
-            }
+        .onAppear {
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
+            UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(
+                string: "Search...",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray]
+            )
+        }
     }
-    }
-
+}
 
 struct PrivateChatView_Previews: PreviewProvider {
     static var previews: some View {

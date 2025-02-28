@@ -51,114 +51,106 @@ struct LectureScheduleView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 20) {
+            
+            // Month & Year Selector
+            HStack {
+                Button(action: previousMonth) {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.blue)
+                }
                 
-                // Month & Year Selector
+                Spacer()
+                
+                Text("\(monthNames[currentMonth - 1]) \(currentYear)")
+                    .font(.headline)
+                
+                Spacer()
+                
+                Button(action: nextMonth) {
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.blue)
+                }
+            }
+            .padding(.horizontal, 16)
+
+            VStack(spacing: 10) {
+
                 HStack {
-                    Button(action: previousMonth) {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.blue)
-                    }
-                    
-                    Spacer()
-                    
-                    Text("\(monthNames[currentMonth - 1]) \(currentYear)")
-                        .font(.headline)
-                    
-                    Spacer()
-                    
-                    Button(action: nextMonth) {
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.blue)
+                    ForEach(["M", "T", "W", "T", "F", "S", "S"], id: \.self) { day in
+                        Text(day)
+                            .frame(width: 40, height: 40)
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                            .multilineTextAlignment(.center)
                     }
                 }
-                .padding(.horizontal, 16)
-
+                
+                // Calendar Dates
                 VStack(spacing: 10) {
-
-                    HStack {
-                        ForEach(["M", "T", "W", "T", "F", "S", "S"], id: \.self) { day in
-                            Text(day)
-                                .frame(width: 40, height: 40)
-                                .font(.subheadline)
-                                .foregroundColor(.black)
-                                .multilineTextAlignment(.center)
-                        }
-                    }
+                    let totalCells = ((daysInMonth + firstWeekday) / 7 + 1) * 7
                     
-                    // Calendar Dates
-                    VStack(spacing: 10) {
-                        let totalCells = ((daysInMonth + firstWeekday) / 7 + 1) * 7
-                        
-                        ForEach(0..<totalCells / 7, id: \.self) { week in
-                            HStack {
-                                ForEach(0..<7, id: \.self) { day in
-                                    let date = week * 7 + day - firstWeekday + 1
-                                    
-                                    if date > 0 && date <= daysInMonth {
-                                        Text("\(date)")
-                                            .frame(width: 40, height: 40)
-                                            .font(.subheadline)
-                                            .background(
-                                                selectedDate == date ? Color.blue :
-                                                (dummyLectures.keys.contains(date) ? Color.blue.opacity(0.3) : Color.clear)
-                                            )
-                                            .cornerRadius(20)
-                                            .foregroundColor(selectedDate == date ? .white : .primary)
-                                            .onTapGesture {
-                                                selectedDate = date
-                                            }
-                                    } else {
-                                        Spacer().frame(width: 40, height: 40)
-                                    }
+                    ForEach(0..<totalCells / 7, id: \.self) { week in
+                        HStack {
+                            ForEach(0..<7, id: \.self) { day in
+                                let date = week * 7 + day - firstWeekday + 1
+                                
+                                if date > 0 && date <= daysInMonth {
+                                    Text("\(date)")
+                                        .frame(width: 40, height: 40)
+                                        .font(.subheadline)
+                                        .background(
+                                            selectedDate == date ? Color.blue :
+                                            (dummyLectures.keys.contains(date) ? Color.blue.opacity(0.3) : Color.clear)
+                                        )
+                                        .cornerRadius(20)
+                                        .foregroundColor(selectedDate == date ? .white : .primary)
+                                        .onTapGesture {
+                                            selectedDate = date
+                                        }
+                                } else {
+                                    Spacer().frame(width: 40, height: 40)
                                 }
                             }
                         }
                     }
                 }
-                .padding()
-                .background(Color(hex: "F6F6F6"))
-                .cornerRadius(10)
-                .padding(.horizontal, 16)
-                
-                // Lecture Details Section
-                if let selectedDate = selectedDate, let lecture = dummyLectures[selectedDate] {
-                    HStack {
-                        Text(lecture.0)
-                            .font(.headline)
-                        Text(lecture.1)
-                            .font(.headline)
-                        Spacer()
-                        Text(lecture.2)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-                    .padding(.horizontal, 30)
-                } else {
-                    Text("No lectures scheduled for this date")
-                        .foregroundColor(.gray)
+            }
+            .padding()
+            .background(Color(hex: "F6F6F6"))
+            .cornerRadius(10)
+            .padding(.horizontal, 16)
+            
+            // Lecture Details Section
+            if let selectedDate = selectedDate, let lecture = dummyLectures[selectedDate] {
+                HStack {
+                    Text(lecture.0)
+                        .font(.headline)
+                    Text(lecture.1)
+                        .font(.headline)
+                    Spacer()
+                    Text(lecture.2)
                         .font(.subheadline)
-                        .padding(.horizontal, 30)
+                        .foregroundColor(.gray)
                 }
+                .padding(.horizontal, 30)
+            } else {
+                Text("No lectures scheduled for this date")
+                    .foregroundColor(.gray)
+                    .font(.subheadline)
+                    .padding(.horizontal, 30)
+            }
 
-                Spacer()
-            }
-            .navigationBarTitle("Lectures Schedule", displayMode: .inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("Lectures Schedule")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.black)
-                }
-            }
+            Spacer()
         }
+        .navigationTitle("Lectures Schedule") 
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-
-struct LectureScheduleView_Previews: PreviewProvider {
-    static var previews: some View {
+// Preview
+#Preview {
+    NavigationView {
         LectureScheduleView()
     }
 }

@@ -12,19 +12,25 @@ struct MarkAttendanceView: View {
     @State private var scannedCode: String = "Scan a QR Code"
     
     var body: some View {
-        ZStack {
-            QRScannerView(scannedCode: $scannedCode)
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                Spacer()
-                Text(scannedCode)
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-                    .padding(.bottom, 50)
+        NavigationView {  // Ensure that NavigationView is used for the title to be managed
+            ZStack {
+                QRScannerView(scannedCode: $scannedCode)
+                    .edgesIgnoringSafeArea(.all)
+                
+                VStack {
+                    Spacer()
+                    Text("Scan the QR provided by the lecturer")
+                    Text(scannedCode)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                        .padding(.bottom, 50)
+                }
             }
+            .navigationTitle("Mark Attendance")  // Title to show
+            .navigationBarTitleDisplayMode(.inline)  // Keep title in line
+            .navigationBarBackButtonHidden(true)  // Hides back button
         }
     }
 }
@@ -94,7 +100,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
            let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject,
            let stringValue = readableObject.stringValue {
             scannedCode?.wrappedValue = stringValue
-            captureSession.stopRunning() // Stop scanning after first result
+            captureSession.stopRunning()
         }
     }
 }

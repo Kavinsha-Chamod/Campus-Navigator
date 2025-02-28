@@ -7,40 +7,53 @@
 import SwiftUI
 
 struct AccountView: View {
+    @State private var isLoggedOut = false  // State to control navigation
+    
     var body: some View {
         NavigationView {
-            List {
+            VStack {
                 Image("profile")
                     .resizable()
                     .scaledToFill()
                     .clipShape(Circle())
+                    .frame(width: 120, height: 120)
                     .padding(.top, 20)
                     .padding(.bottom, 10)
-                
-                Section(header: Text("PROFILE")) {
-                    ProfileRow(label: "Username", value: "john_doe")
-                    ProfileRow(label: "Name", value: "John Doe")
-                    ProfileRow(label: "Email", value: "john.doe@example.com")
-                }
-                
-                Section {
-                    Button(action: {
-                        // Action for logout
-                        print("User logged out")
-                    }) {
-                        Text("Logout")
-                            .foregroundColor(.red)
+                    .shadow(radius: 5)
+
+                List {
+                    Section(header: Text("PROFILE")) {
+                        ProfileRow(label: "Username", value: "john_doe")
+                        ProfileRow(label: "Name", value: "John Doe")
+                        ProfileRow(label: "Email", value: "john.doe@example.com")
+                    }
+                    
+                    Section {
+                        Button(action: {
+                            isLoggedOut = true
+                        }) {
+                            Text("Logout")
+                                .foregroundColor(.red)
+                        }
                     }
                 }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("My Account")
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.black)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .principal) {
+                        Text("My Account")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.black)
+                    }
+                }
+                
+                NavigationLink(
+                    destination: LoginView(),
+                    isActive: $isLoggedOut
+                ) {
+                    EmptyView()
                 }
             }
+            .background(Color.clear)
         }
     }
 }

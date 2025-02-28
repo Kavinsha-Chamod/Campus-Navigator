@@ -10,7 +10,7 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 255, green: 255, blue: 255)
+                Color.white
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
@@ -56,16 +56,16 @@ struct LoginView: View {
                         HStack {
                             Spacer()
                             Text("Forgot Password?")
-                                .foregroundColor(Color(hex:"007AFF"))
+                                .foregroundColor(Color(hex: "007AFF"))
                                 .font(.system(size: 14))
                                 .padding(.trailing, 20)
                         }
                         
                         ButtonView(
                             title: "LOGIN",
-                            backgroundColor: Color(hex:"007AFF"),
+                            backgroundColor: Color(hex: "007AFF"),
                             foregroundColor: .white,
-                            borderColor: Color(hex:"007AFF")
+                            borderColor: Color(hex: "007AFF")
                         ) {
                             loginUser()
                         }
@@ -77,7 +77,7 @@ struct LoginView: View {
                             
                             NavigationLink(destination: RegisterView()) {
                                 Text("Register")
-                                    .foregroundColor(Color(hex:"007AFF"))
+                                    .foregroundColor(Color(hex: "007AFF"))
                                     .fontWeight(.bold)
                             }
                         }
@@ -86,12 +86,11 @@ struct LoginView: View {
                     .padding(.horizontal, 20)
                 }
             }
+            .navigationBarBackButtonHidden(true) // Hide the back button
             .fullScreenCover(isPresented: $isLoggedIn) {
                 if let user = loggedInUser {
-                    
                     OTPVerificationView(user: user)
                 } else {
-                    
                     Text("Error: User data not found.")
                 }
             }
@@ -122,5 +121,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView() 
+    LoginView()
 }

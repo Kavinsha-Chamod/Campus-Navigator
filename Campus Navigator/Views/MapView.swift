@@ -381,7 +381,7 @@ struct MapView: View {
                     .offset(y: UIScreen.main.bounds.height * 0.05)
                 }
             }
-            NavigationLink("", destination: ChatView(), isActive: $navigateToChat)
+            NavigationLink("", destination: AvalibileChatView(), isActive: $navigateToChat)
         }
     }
     

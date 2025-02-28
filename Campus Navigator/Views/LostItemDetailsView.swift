@@ -73,8 +73,7 @@ struct LostItemDetailView: View {
                 
                 HStack {
                     Spacer()
-                    Button(action: {
-                    }) {
+                    NavigationLink(destination: AvalibileChatView()) {
                         HStack {
                             Text("Chat with Reporter")
                             Image(systemName: "paperplane.fill")

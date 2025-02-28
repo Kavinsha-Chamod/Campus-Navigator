@@ -15,22 +15,9 @@
 		9A0D8C6F2D61AAC000B59259 /* Campus Navigator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Campus Navigator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		6D58F8662D70B5F500F649F8 /* Exceptions for "Campus Navigator" folder in "Campus Navigator" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Campus-Navigator-Info.plist",
-			);
-			target = 9A0D8C6E2D61AAC000B59259 /* Campus Navigator */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9A0D8C712D61AAC000B59259 /* Campus Navigator */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				6D58F8662D70B5F500F649F8 /* Exceptions for "Campus Navigator" folder in "Campus Navigator" target */,
-			);
 			path = "Campus Navigator";
 			sourceTree = "<group>";
 		};

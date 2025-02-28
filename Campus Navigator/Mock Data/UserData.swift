@@ -17,7 +17,7 @@ struct User: Equatable {
 struct UserData {
     static let users: [User] = [
             User(username: "admin", password: "1234", email: "admin@example.com", name: "Admin User"),
-            User(username: "cohdse222f-038", password: "user123", email: "user038@example.com", name: "Amal Perera"),
+            User(username: "YR3COBSCCOMP232P-021", password: "user123", email: "user038@example.com", name: "Amal Perera"),
             User(username: "hdse222f-001", password: "user123", email: "user001@example.com", name: "User 001")
         ]
     
